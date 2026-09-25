@@ -1,5 +1,6 @@
 #include "TimeCode.h"
 #include <iostream>
+//I read the three notes at the beginning of the assignment directions
 
 TimeCode::TimeCode(unsigned int hr, unsigned int min, long long unsigned int sec) {
 	t = (hr * 3600) + (min * 60) + sec;
@@ -17,12 +18,18 @@ void TimeCode::SetHours(unsigned int hours) { // set functions changes hr/min/se
 }
 
 void TimeCode::SetMinutes(unsigned int minutes) {
+	if (minutes > 59) {
+		throw invalid_argument("Minutes must be under 60: " + to_string(minutes));
+	};
 	unsigned int hr, min, sec;
 	GetComponents(hr, min, sec);
 	t = t - (min * 60) + (minutes * 60);
 }
 
 void TimeCode::SetSeconds(unsigned int second){
+	if (second > 59) {
+		throw invalid_argument("Seconds must be under 60: " + to_string(second));
+	};
 	unsigned int hr, min, sec;
 	GetComponents(hr, min, sec);
 	t = t - (sec) + (second);
@@ -38,11 +45,15 @@ unsigned int TimeCode::GetHours() const{
 }
 
 unsigned int TimeCode::GetMinutes() const{
-	return t / 60;
+	unsigned int hr, min, sec;
+	GetComponents(hr, min, sec);
+	return min;
 }
 
-unsigned int TimeCode::GetSecond() const{
-	return t;
+unsigned int TimeCode::GetSeconds() const{
+	unsigned int hr, min, sec;
+	GetComponents(hr, min, sec);
+	return sec;
 }
 
 void TimeCode::GetComponents(unsigned int& hr, unsigned int& min, unsigned int& sec) const {
@@ -75,7 +86,7 @@ TimeCode TimeCode::operator+(const TimeCode& other) const{
 TimeCode TimeCode::operator-(const TimeCode& other) const{
 	int timesec = t - other.t;
 	if (timesec < 0) { //subtracting can result in - t value
-		throw invalid_argument("Negative arguments not allowed: " + to_string(timesec));
+		throw invalid_argument("Subtraction can not equal a negative number: " + to_string(timesec));
 	}
 	
 	return TimeCode(0, 0, timesec);	
