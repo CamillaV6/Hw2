@@ -9,18 +9,15 @@
 using namespace std;
 
 struct DryingSnapShot {
-	// This is a struct, it's like an object
-	// that doesn't have any methods.
-	// You can read more about them in the ZyBook
-	// just search for "struct"
 	string name;
 	time_t startTime;
 	TimeCode *timeToDry;
 };
 
-long long int get_time_remaining(DryingSnapShot dss){ 
+long long int get_time_remaining(DryingSnapShot dss){
 	time_t nowTime = time(0);
 	time_t difference = nowTime - dss.startTime;
+	
 	time_t Time_left = dss.timeToDry->GetTimeCodeAsSeconds() - difference;
 	return Time_left;
 }
@@ -34,7 +31,7 @@ double get_sphere_sa(double rad){
 	return sa;
 }
 
-TimeCode *compute_time_code(double surfaceArea){
+TimeCode *compute_time_code(double surfaceArea){ //time to dry is equal to the surface area
 	TimeCode *time = new TimeCode(0, 0, surfaceArea);
 	return time;
 }
@@ -63,17 +60,16 @@ void tests(){
 
 	DryingSnapShot dss2;
 	dss2.startTime = time(0);
-	TimeCode tc3 = TimeCode(0, 0, 10);
 	double sa2 = get_sphere_sa(3.0);
 	cout << to_string(sa2) << endl;
 	assert (112 < sa2 && sa2 < 114);
-	TimeCode *tc4 = compute_time_code(sa2);
-	dss2.timeToDry = tc4;
+	TimeCode *tc3 = compute_time_code(sa2);
+	dss2.timeToDry = tc3;
 	ans = get_time_remaining(dss2);
 	assert(112 < sa2 && sa2 < 114);
 	cout << drying_snap_shot_to_string(dss2) << endl;
 	
-	delete tc4;
+	delete tc3;
 	
 	
 
