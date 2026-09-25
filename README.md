@@ -9,7 +9,7 @@ Contains tests that use TimeCode
 tests are in functions that are called in the main function
 values in the tests can be changed to do different tests
 
-NasaLaunchAnalasis
+NasaLaunchAnalasis.cpp
 takes the launch time from a csv file and calculates the average using TimeCode.cpp
 If using different file, must be in the same format at the Space_Corrected.csv file
 
