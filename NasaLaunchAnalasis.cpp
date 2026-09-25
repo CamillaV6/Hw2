@@ -11,7 +11,7 @@ using namespace std;
 
 vector<string> split_row(string line) { //seperates each row of the file
 	vector<string> row;
-	stringstream l(line); //found this online as well
+	stringstream l(line); //https://www.geeksforgeeks.org/cpp/stringstream-c-applications/ used for seperating the lines with commas
 	
 	while (getline(l, line, ',')) {
 		row.push_back(line);
@@ -30,7 +30,7 @@ void extract_times(string full_time, unsigned int& hour, unsigned int& min) {//t
 }
 
 int main() {
-	fstream Nasa;
+	fstream Nasa; //https://www.w3schools.com/cpp/ref_fstream_fstream.asp used to find how to use file
 	Nasa.open("Space_Corrected.csv", ios::in);
 	
 	string line;
@@ -38,7 +38,7 @@ int main() {
 	int count = 0;
 	TimeCode total = TimeCode(0, 0, 0);
 	
-	while (getline(Nasa, line)){ //found this online
+	while (getline(Nasa, line)){ //used google summary feature for iteratign through the file
 		vector<string> row = split_row(line);
 		
 		if (row[4].find("UTC") != string::npos) { //Finding if includes UTC because that determines if the time is included or just the year
